@@ -1,12 +1,12 @@
 <?php
 
-class NodoArbolDHTML{
+class Schema{
 	var $title;
 	var $description;
 	var $type;
 	var $properties;
 
-   function NodoArbolDHTML($title,$description,$type){
+   function Schema($title,$description,$type){
       $this->title = $title;
       $this->description = $description;
       $this->type = $type;
