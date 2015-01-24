@@ -46,7 +46,6 @@ class TemplatePage
 					<td class="slogan" colspan="1">Innovative seed for give life to your ideas</td>
 					<td class="banderas"  colspan="1">
 						<img src="../../Images/col-flag.png" >
-						<img src="../../Images/bra-flag.png" >
 						<img src="../../Images/uk-flag.png" >
 					</td>
 				</tr>

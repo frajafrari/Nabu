@@ -27,7 +27,7 @@
 	$schema=$objUtilities->getSchema($idPage);
 	$options=$objUtilities->getOption($idPage);
 	$data='';
-    $imprimirJsons=false;
+    $imprimirJsons=true;
 
 	echo "<div align='center'>";
 		$objUtilities->forms($style,$imprimirJsons,$schema,$options,$data);
