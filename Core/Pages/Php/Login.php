@@ -8,26 +8,25 @@
 		session_destroy();
 
 	session_start();
-
-	$objTemplate = new TemplatePage();
-	$objUtilities = new Utilities();
-
-	$objTemplate->TemplatePage();
-	$objUtilities->Utilities();
-
-
-	$objTemplate->header('Login de Usuario');
 	$idPage = basename($_SERVER['PHP_SELF']);
 
-	$objTemplate->body();
-	$objTemplate->banner();
+	$objTemplate = new TemplatePage($idPage);
+	$objUtilities = new Utilities();
 
+	$objTemplate->TemplatePage($idPage);
+	$objUtilities->Utilities();
 
+	$title='Login de Usuario';
 	$style='forms';
+	$imprimirJsons=false;
+
+	$objTemplate->header($title);
+	$objTemplate->banner();
+	$objTemplate->body();
+
 	$schema=$objUtilities->getSchema($idPage);
 	$options=$objUtilities->getOption($idPage);
 	$data='';
-    $imprimirJsons=true;
 
 	echo "<div align='center'>";
 		$objUtilities->forms($style,$imprimirJsons,$schema,$options,$data);
@@ -35,5 +34,6 @@
 
 
 	$objTemplate->tail();
+
 
 ?>

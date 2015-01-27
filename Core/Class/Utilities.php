@@ -55,11 +55,11 @@ class Utilities
 
 			$this->result = $this->db->Execute("SELECT a.cc_id_opt_form,a.cc_value,a.cc_title FROM cc_options_buttons a WHERE a.cc_id_page = '$id'");
 
-
+			$button = array();
 			while ($row = $this->result->FetchRow()){
-				$boton = $json->addButton($row[0],$row[1],$row[2]);
-				$json->addForm("buttons",$boton);
+				$button[$row[0]] = array("value"=> $row[1],"title"=> $row[2]);
 			}
+			$json->addForm("buttons",$button);
 
 			$this->result = $this->db->Execute("SELECT a.cc_property, a.cc_label, a.cc_type, a.cc_dataSource FROM  cc_options_form a WHERE a.cc_id_opt_form ='fields' AND a.cc_id_page = '$id'");
 
@@ -87,6 +87,7 @@ class Utilities
 		}
 ?>
 
+	  <div id="contenido">
 	  <div class=<?php echo $style ?> >
 			<div id="field1"></div>
 				<script type="text/javascript" id="field1-script">
@@ -101,6 +102,7 @@ class Utilities
 					});
 				</script>
 		</div>
+	  </div>
 <?php
 	}
 }

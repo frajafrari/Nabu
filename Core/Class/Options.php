@@ -2,17 +2,11 @@
 
 class Options{
 	var $renderForm;
+	var $form;
+	var $fields;
 
    function Options($renderForm){
       $this->renderForm = $renderForm;
-   }
-
-   function addButton($buttonId,$value,$title){
-
-         if (!isset($this->buttons)){
-           $this->buttons = array();
-         }
-        $this->buttons[$buttonId] = array("value"=> $value,"title"=> $title);
    }
 
    function addForm($fieldId,$value){
@@ -20,13 +14,7 @@ class Options{
       if (!isset($this->form)){
          $this->form = array();
       }
-
-      	if ($fieldId== "attributes")
-      		$this->form[$fieldId] = $value;
-		else{
-			if ($fieldId== "buttons")
-				$this->form[$fieldId] = $this->buttons;
-		}
+      	$this->form[$fieldId] = $value;
 	}
 
     function addFields($fieldId,$value){

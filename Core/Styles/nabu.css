@@ -5,9 +5,11 @@ body{
 	
 }
 header{
-	height:110px;
+	
+	
+	height:80px;
 	color:#f6f8f8;
-	font-size:40px;
+	font-size:28px;
         text-align:left;
 	position:relative;
 	z-index:-1;
@@ -21,9 +23,11 @@ header{
 	background-image:-webkit-linear-gradient(top, #7898e4, #2f3337);
 	box-shadow: 0 3px 3px rgba(0,0,0,0.2);
 
+	
+
 }
 
-header  td.slogan{
+header  td.slogan{	
 	color:#fff;	
 	font-size:15px;
 	font-weight : bold;
