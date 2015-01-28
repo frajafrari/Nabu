@@ -26,17 +26,20 @@ class Options{
          $this->fields[$fieldId] = $value;
    }
 
-   function addField($label,$type,$dataSource){
+   function addField($id,$type,$db,$field){
 
-   	    if (!isset($field)){
-            $field = array();
-        }
+		if (!isset($fields)){
+			$fields = array();
+		}
 
-    	$field["label"]=$label;
-   		$field["type"]=$type;
-   		$field["dataSource"]=$dataSource;
+		$result = $db->Execute("SELECT b.nb_property_fld,a.nb_schem_value_fld FROM nb_forms_tbl a , nb_config_frmwrk_tbl b WHERE  a.nb_config_frmwrk_id_fld = b.nb_config_frmwrk_id_fld and b.nb_config_type_fld='$type' and a.nb_id_page_fld = '$id' and a.nb_id_pr_schema_fld ='$field'");
 
-   		return $field;
+		while ($row = $result->FetchRow()){
+			$fields[$row[0]]=$row[1];
+		}
+
+		return $fields;
+
    }
 
   function addElement($action,$method,$enctype){

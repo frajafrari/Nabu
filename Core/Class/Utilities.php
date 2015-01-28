@@ -18,17 +18,17 @@ class Utilities
 	function getSchema($id){
 
 	    $id=strtolower($id);
+	    $type='schema';
 		$this->db=$this->cx->conectar();
-		$this->result = $this->db->Execute("SELECT a.cc_title, a.cc_description, a.cc_type FROM cc_schema a WHERE  a.cc_id_page = '$id'");
+		$this->result = $this->db->Execute("SELECT a.nb_title_fld, a.nb_description_fld, a.nb_type_fld FROM nb_schema_tbl a WHERE  a.nb_id_page_fld = '$id'");
 		$row=$this->result->FetchRow();
 
 		$json = new Schema($row[0],$row[1],$row[2]);
 
-		$this->result = $this->db->Execute("SELECT b.cc_id_pr_schema,b.cc_type,b.cc_format,b.cc_required,b.cc_pattern FROM cc_schema a, cc_schm_properties b WHERE  a.cc_id_page = b.cc_id_page AND a.cc_id_page = '$id'");
+		$this->result = $this->db->Execute("SELECT distinct a.nb_id_pr_schema_fld FROM  nb_forms_tbl a , nb_config_frmwrk_tbl b WHERE a.nb_config_frmwrk_id_fld = b.nb_config_frmwrk_id_fld and  b.nb_config_type_fld='$type' and a.nb_id_page_fld = '$id'");
 
 		while ($row = $this->result->FetchRow()){
-
-			$campo=$json->addField($row[1],$row[2],$row[3],$row[4]);
+			$campo=$json->addField($id,$type,$this->db,$row[0]);
 			$json->addProperties($row[0],$campo);
 		}
 
@@ -39,21 +39,22 @@ class Utilities
 
 	function getOption($id){
 		$id=strtolower($id);
+		$type='options';
 
 		$this->db=$this->cx->conectar();
 
-			$this->result = $this->db->Execute("SELECT cc_renderForm FROM cc_options a WHERE  a.cc_id_page = '$id'");
+			$this->result = $this->db->Execute("SELECT nb_renderForm_fld FROM nb_options_tbl a WHERE  a.nb_id_page_fld = '$id'");
 			$row=$this->result->FetchRow();
 
 			$json = new Options($row[0]);
 
-			$this->result = $this->db->Execute("SELECT a.cc_action , a.cc_method, a.cc_enctype FROM  cc_options_form a WHERE a.cc_id_opt_form='form' AND a.cc_id_page = '$id'");
+			$this->result = $this->db->Execute("SELECT a.nb_action_fld , a.nb_method_fld, a.nb_enctype_fld FROM  nb_options_form_tbl a WHERE a.nb_id_opt_form_fld='form' AND a.nb_id_page_fld = '$id'");
 			$row=$this->result->FetchRow();
 
 			$attributes=$json->addElement($row[0],$row[1],$row[2]);
 			$json->addForm("attributes",$attributes);
 
-			$this->result = $this->db->Execute("SELECT a.cc_id_opt_form,a.cc_value,a.cc_title FROM cc_options_buttons a WHERE a.cc_id_page = '$id'");
+			$this->result = $this->db->Execute("SELECT a.nb_id_opt_form_fld,a.nb_value_fld,a.nb_title_fld FROM nb_options_buttons_tbl a WHERE a.nb_id_page_fld = '$id'");
 
 			$button = array();
 			while ($row = $this->result->FetchRow()){
@@ -61,11 +62,10 @@ class Utilities
 			}
 			$json->addForm("buttons",$button);
 
-			$this->result = $this->db->Execute("SELECT a.cc_property, a.cc_label, a.cc_type, a.cc_dataSource FROM  cc_options_form a WHERE a.cc_id_opt_form ='fields' AND a.cc_id_page = '$id'");
+			$this->result = $this->db->Execute("SELECT distinct a.nb_id_pr_schema_fld FROM nb_forms_tbl a , nb_config_frmwrk_tbl b WHERE a.nb_config_frmwrk_id_fld = b.nb_config_frmwrk_id_fld and  b.nb_config_type_fld='$type' and a.nb_id_page_fld = '$id'");
 
 			while ($row = $this->result->FetchRow()){
-
-				$campo=$json->addField($row[1],$row[2],$row[3]);
+				$campo=$json->addField($id,$type,$this->db,$row[0]);
 				$json->addFields($row[0],$campo);
 			}
 
